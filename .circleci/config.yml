@@ -21,13 +21,12 @@ jobs:
       - run:
           name: build
           command:  "next build && next export"
-  request-approval:
-    type: approval
   test:
     working_directory: ~/repo
     docker:
       - image: circleci/node:10.16.3
     steps:
+        - checkout
         - restore_cache:
           key: dependency-cache-{{ checksum "package-lock.json" }}
         - run:
@@ -35,13 +34,7 @@ jobs:
           command: npm run test
 
 workflows:
-  build-test:
+  build-test-approval-deploy:
     jobs:
-      - request-approval
       - build
-          filters:
-            branches:
-              only:
-                - beta
-      - test
-          
+      - test          
