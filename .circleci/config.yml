@@ -15,7 +15,8 @@ jobs:
           name: build
           command:  "yarn run build"
       - persist_to_workspace:
-          root: ~/repo/out
+          root: ~/project
+          paths: out
 
   test:
     docker:
@@ -34,7 +35,7 @@ jobs:
     steps:
       - checkout
       - attach_workspace:
-          at: ~/repo/out
+          at: ~/project
        - run:
           name: Install and configure dependencies
           command: |
