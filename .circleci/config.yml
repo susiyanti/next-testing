@@ -1,42 +1,29 @@
 version: 2.1
+
+orbs:
+  node: circleci/node@5.0.2
+
 jobs:
   build:
     docker:
-      - image: circleci/node:16.15.0
+      - image: cimg/node:16.15.0
     steps:
       - checkout
-      - run:
-          name: Update NPM
-          command: "sudo npm install -g npm@5"
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
+      - node/install-packages:
+          check-cache: detect
       - run:
           name: build
-          command:  "npm run build"
+          command:  "yarn run build"
   test:
     docker:
-      - image: circleci/node:16.15.0
+      - image: cimg/node:16.15.0
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-      - run:
-          name: Install Dependencies
-          command: npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package-lock.json" }}
-          paths:
-            - ./node_modules
+      - node/install-packages:
+          check-cache: detect
       - run:
           name: Run tests
-          command: npm run test
+          command: yarn run test
 
 workflows:
   build-test-approval-deploy:
