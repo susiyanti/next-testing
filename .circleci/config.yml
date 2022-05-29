@@ -13,7 +13,7 @@ jobs:
           check-cache: detect
       - run:
           name: build
-          command:  "yarn run build"
+          command:  "yarn run build-ghpages"
       - persist_to_workspace:
           root: ~/project
           paths:

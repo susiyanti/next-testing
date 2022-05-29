@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build && next export",
+    "build-ghpages": "DEPLOY_ENV=GH_PAGES next build && next export",
     "start": "next start",
     "test": "jest"
   },
