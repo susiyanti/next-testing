@@ -61,10 +61,10 @@ workflows:
       - hold:
           type: approval
           requires:
-            - build          
+            - build
+          filters:
+            branches:
+              only: beta           
       - deploy:
           requires:
             - hold
-          filters:
-            branches:
-              only: beta          
